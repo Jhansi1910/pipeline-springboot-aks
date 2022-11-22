@@ -36,13 +36,9 @@ stages:
           inputs:
             containerRegistry: 'jhansirepo'
             repository: 'achu'
-            command: 'build'
+            command: 'buildAndPush'
             Dockerfile: '**/Dockerfile'
-        - task: Docker@2
-          inputs:
-            containerRegistry: 'jhansirepo'
-            repository: 'achu'
-            command: 'push'
+
         - task: PublishBuildArtifacts@1
           inputs:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)'
