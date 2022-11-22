@@ -48,3 +48,5 @@ stages:
           inputs:
             Contents: 'jhansi.yml'
             TargetFolder: '$(build.artifactstagingdirectory)'
+        - upload: $(Build.ArtifactStagingDirectory)
+          artifact: drop
