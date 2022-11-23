@@ -42,3 +42,4 @@ stages:
         azureContainerRegistry: '{"loginServer":"jhansirepo.azurecr.io", "id" : "/subscriptions/f3f0b402-1498-4537-9728-704a780011a0/resourceGroups/jhansi-rg/providers/Microsoft.ContainerRegistry/registries/jhansirepo"}'
         dockerComposeFile: '**/docker-compose.yaml'
         action: 'Run a Docker Compose command'
+        dockerComposeCommand: 'build'
