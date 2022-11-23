@@ -1,0 +1,44 @@
+# Maven package Java project Web App to Linux on Azure
+# Build your Java project and deploy it to Azure as a Linux web app
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- master
+
+variables:
+
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: '499db8f6-f1c6-45a8-a021-c8475db5debf'
+
+  # Web app name
+  webAppName: 'SushmithaWeb'
+
+  # Environment name
+  environmentName: 'SushmithaWeb'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - job: MavenPackageAndPublishArtifacts
+    displayName: Maven Package and Publish Artifacts
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: Maven@3
+      displayName: 'Maven Package'
+      inputs:
+        mavenPomFile: 'pom.xml'
+    - task: DockerCompose@0
+      displayName: Container registry login
+      inputs:
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'BFSI_LGI_DevOps_Training_POC(f3f0b402-1498-4537-9728-704a780011a0)'
+        azureContainerRegistry: '{"loginServer":"jhansirepo.azurecr.io", "id" : "/subscriptions/f3f0b402-1498-4537-9728-704a780011a0/resourceGroups/jhansi-rg/providers/Microsoft.ContainerRegistry/registries/jhansirepo"}'
+        dockerComposeFile: '**/docker-compose.yaml'
+        action: 'Run a Docker Compose command'
